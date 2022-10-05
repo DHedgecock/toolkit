@@ -116,3 +116,16 @@ func TestTools_CreateDirIfNotExists(t *testing.T) {
 
 	os.Remove("./testdata/create_dir_test")
 }
+
+func TestTools_Slugify(t *testing.T) {
+	var testTools Tools
+
+	slug, err := testTools.Slugify("!OH_MY*lanta")
+	if err != nil {
+		t.Errorf("error creating slug: %s", err.Error())
+	}
+
+	if slug != "oh-my-lanta" {
+		t.Errorf("incorrect slug of: %s", slug)
+	}
+}
