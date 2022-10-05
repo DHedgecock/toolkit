@@ -96,3 +96,23 @@ func TestTools_UploadFiles(t *testing.T) {
 		wg.Wait()
 	}
 }
+
+func TestTools_CreateDirIfNotExists(t *testing.T) {
+	var testTools Tools
+
+	err := testTools.CreateDirIfNotExists("./testdata/create_dir_test")
+	if err != nil {
+		t.Errorf("error creating new directory: %s", err.Error())
+	}
+
+	err = testTools.CreateDirIfNotExists("./testdata/create_dir_test")
+	if err != nil {
+		t.Errorf("error creating dir that already exists: %s", err.Error())
+	}
+
+	if _, err := os.Stat("./testdata/create_dir_test"); os.IsNotExist(err) {
+		t.Error("directory not actually created")
+	}
+
+	os.Remove("./testdata/create_dir_test")
+}
